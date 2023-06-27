@@ -1,7 +1,6 @@
 package testcases;
 
 import java.time.Duration;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -29,6 +28,7 @@ public class BaseTest implements AutoContants
 	LoginPage lp;
 	HomePage hp;
 	
+	/*------------------------------- Browser selection -------------------------------*/
 	@BeforeTest
 	public void environment()
 	{
@@ -50,6 +50,7 @@ public class BaseTest implements AutoContants
 		}
 	}
 	
+	/*------------------- Browser Configuration & Navigating to the application -------------------*/
 	@BeforeClass
 	public void setup()
 	{
@@ -61,6 +62,7 @@ public class BaseTest implements AutoContants
 		Reporter.log("Setup complete", true);
 	}
 	
+	/*------------------------------- Login into the Application -------------------------------*/
 	  @BeforeMethod public void loginToApp() 
 	  { 
 		  String usertype, username, password;
@@ -72,7 +74,10 @@ public class BaseTest implements AutoContants
 		  lp.login(usertype,username, password); 
 		  Reporter.log("Login success", true); 
 	  }
-	
+	  
+	 /*--------------- Control will be transferred to the test case or @Test ---------------*/
+	  
+	  /*------------------------------ Logout from App ------------------------------*/
 	  @AfterMethod public void logoutFromApp(ITestResult result) 
 	  { 
 		  String testCaseName = result.getName(); 
@@ -94,18 +99,19 @@ public class BaseTest implements AutoContants
 		  } 
 	  }
 	 
-	
-	@AfterClass
-	public void tearDown()
-	{
+	  /*------------------------------ close openned windows ------------------------------*/
+	  @AfterClass
+	  public void tearDown()
+	  {
 		driver.close();
 		Reporter.log("Teardown Success!!", true);
-	}
+	  }
 	
-	@AfterTest
-	public void shutDown()
-	{
-		driver.quit();
-		Reporter.log("Shutdown Success!!", true);
-	}
+	  /*------------------------------ closing the connection ------------------------------*/
+	  @AfterTest
+	  public void shutDown()
+	  {
+		  	driver.quit();
+			Reporter.log("Shutdown Success!!", true);
+	  }
 }

@@ -1,7 +1,6 @@
 package pom;
 
 import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,6 +11,16 @@ import genericLibs.WebActionUtils;
 
 public class StockINPage extends BasePage
 {
+	/*------------------------- Page Verification -------------------------*/
+	
+	final static String pageTitle = " 	OptimNet 4.4";
+	final static String pageUrl = PropertyFileLib.readPropertyValue(AutoContants.CON_PROP_PATH,"testurlHO");
+	
+	public StockINPage(WebDriver driver, WebActionUtils webActionUtils) 
+	{
+		super(driver, webActionUtils, pageTitle, pageUrl);
+	}
+	
 	/*-------------------------- Username & Password --------------------------*/
 	
 	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_txtEnteredBy']")
@@ -307,8 +316,6 @@ public class StockINPage extends BasePage
 	
 	/*-------------------------- C O N T A C T L E N S --------------------------*/
 	
-	
-	
 	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_ddlstCLensModel']")
 	private WebElement clModel;
 	
@@ -356,27 +363,5 @@ public class StockINPage extends BasePage
 			Reporter.log("Failed to Select Contact Lens Usage", true);
 		}
 	}
-	
-	
-	/*-------------------------- L E N S --------------------------*/
-	
-	
-	
-	/*-------------------------- Save Head Office --------------------------*/
-	
-	
-	
-	/*------------------------------------------------------------------------------------------------------*/
-	
-	final static String pageTitle = " 	OptimNet 4.4";
-	final static String pageUrl = PropertyFileLib.readPropertyValue(AutoContants.CON_PROP_PATH,"testurlHO");
-	
-	public StockINPage(WebDriver driver, WebActionUtils webActionUtils) 
-	{
-		super(driver, webActionUtils, pageTitle, pageUrl);
-	}
-	
-	
-	
-	
 }
+

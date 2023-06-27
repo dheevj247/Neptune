@@ -3,20 +3,19 @@ package pom;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import genericLibs.AutoContants;
 import genericLibs.PropertyFileLib;
 import genericLibs.WebActionUtils;
 
 public class LoginPage extends BasePage
 {
+	final static String pageTitle = " 	OptimNet 4.4";
+	final static String pageUrl = PropertyFileLib.readPropertyValue(AutoContants.CON_PROP_PATH,"testurlHO");
+	
 	public LoginPage(WebDriver driver, WebActionUtils webActionUtils) 
 	{
 		super(driver, webActionUtils, pageTitle, pageUrl);
 	}
-	
-	final static String pageTitle = " 	OptimNet 4.4";
-	final static String pageUrl = PropertyFileLib.readPropertyValue(AutoContants.CON_PROP_PATH,"testurlHO");
 	
 	@FindBy(id= "ddlstUsertype")
 	private WebElement userDD;

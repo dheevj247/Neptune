@@ -1,18 +1,26 @@
 package pom;
 
 import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Reporter;
-
 import genericLibs.WebActionUtils;
 
 public class HomePage extends BasePage
 {
+	/*------------------------- Page Verification -------------------------*/
+	
 	final static String pageTitle = "My account - My Store";
 	final static String pageUrl = "http://automationpractice.com/index.php?controller=my-account";
+	
+
+	public HomePage(WebDriver driver, WebActionUtils webActionUtils)
+	{
+		super(driver, webActionUtils, pageTitle, pageUrl);
+	}
+	
+	/*------------------------ Basic Home Page Operation ------------------------*/
 	
 	@FindBy(id="ctl00_btnLogout1")
 	private WebElement logoutBTN;
@@ -26,12 +34,17 @@ public class HomePage extends BasePage
 		webActionUtils.acceptAlert(driver);
 	}
 	
+	public boolean logoutIsDisplayed()
+	{
+		return logoutBTN.isDisplayed();
+	}
+	
 	public void myHome()
 	{
 		webActionUtils.elementClick(homeBTN);
 	}
 	
-	/* navigationBar, Menu & Sub Menu */ 
+	/*------------------- navigationBar, Menu & child Menu -------------------*/ 
 	
 	@FindBy(xpath = "//ul[@id='nav1']/li")
 	private List<WebElement> navigationBar;
@@ -64,10 +77,10 @@ public class HomePage extends BasePage
 			}
 		} catch (Exception e) 
 		{
-			//Reporter.log("Operation FAILED!",true);
+
 		}
 	}
-	/*
+	
 	public void selectFromList(List<WebElement> targetNavigations, List<WebElement> targetMenus, 
 			List<WebElement> targetSubMenus, String navigation, String menu, String subMenu)
 	{
@@ -78,28 +91,25 @@ public class HomePage extends BasePage
 				webActionUtils.moveToElement(targetNavigation);
 				for (WebElement targetMenu : targetMenus) 
 				{
-					if(targetMenu.getText().equals(menu))
+					if(targetMenu.getText().contains(menu))
 					{
 						webActionUtils.moveToElement(targetMenu);
 						for (WebElement targetSubMenu : targetSubMenus) 
 						{
-							webActionUtils.elementClick(targetSubMenu);
+							if(targetSubMenu.getText().contains(subMenu))
+							{
+								webActionUtils.elementClick(targetSubMenu);
+								Reporter.log("successfully clicked " + subMenu, true);
+								break;
+							}
+							
 						}
 					}
 				}
 			}
 		}
 	}
-	*/
-	/*----------------------------------*/
-	
-	public boolean logoutIsDisplayed()
-	{
-		return logoutBTN.isDisplayed();
-	}
-	
-	public HomePage(WebDriver driver, WebActionUtils webActionUtils)
-	{
-		super(driver, webActionUtils, pageTitle, pageUrl);
-	}
 }
+
+	
+

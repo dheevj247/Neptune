@@ -28,7 +28,7 @@ public interface AutoContants
 	String STOCKIN_MENU = "StockIn/Purchase Details";
 	String STOCK_TRANSFER_MENU = "Stock Transfer";
 	
-/*-------------------- Head Office Sub - Menu ---------------------*/
+	/*-------------------- Head Office Sub - Menu ---------------------*/
 	
 	String ST_NORMAL_MODE = "Stock Transfer Normal Mode";
 }

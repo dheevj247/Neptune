@@ -52,12 +52,6 @@ public class WebActionUtils
 		jse.executeScript("window.scrollTo(0,-document.body.scrollHeight);");
 	}
 	
-	public void dragAndDrop(WebElement source,WebElement target)
-	{
-		actions = new Actions(driver);
-		actions.dragAndDrop(source, target).perform();
-	}
-	
 	public void moveToElement(WebElement target)
 	{
 		actions = new Actions(driver);
@@ -109,7 +103,5 @@ public class WebActionUtils
 	public String getAlert(WebDriver driver)
 	{
 		return driver.switchTo().alert().getText();
-	}
-	
-	
+	}	
 }

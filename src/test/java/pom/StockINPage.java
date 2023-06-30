@@ -363,5 +363,48 @@ public class StockINPage extends BasePage
 			Reporter.log("Failed to Select Contact Lens Usage", true);
 		}
 	}
+	
+	/*-------------------------- L E N S --------------------------*/
+	
+	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstLType']/option")
+	private WebElement lensType;
+	
+	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstIndex']/option")
+	private WebElement lensIndex;
+	
+	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstLMat']/option")
+	private WebElement lensMaterial;
+	
+	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstTint']/option")
+	private WebElement lensColor;
+	
+	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstCoat']/option")
+	private WebElement lensCoat;
+	
+	public void lensType(String lt)
+	{
+		try
+		{
+			webActionUtils.selectByText(lensType, lt);
+			Reporter.log("Lens Type Selected successfully", true);
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("Failed to Select Lens Type", true);
+		}
+	}
+	
+	public void lensIndex(String li)
+	{
+		try
+		{
+			webActionUtils.selectByText(lensIndex, li);
+			Reporter.log("Lens Index Selected successfully", true);
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("Failed to Select Lens Index", true);
+		}
+	}
 }
 

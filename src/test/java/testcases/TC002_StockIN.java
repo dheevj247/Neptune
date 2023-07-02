@@ -32,7 +32,7 @@ public class TC002_StockIN extends BaseTest
 		stp.enterRate(CL_rate);
 		stp.enterSPrice(CL_sprice);
 		
-		/*------------------- Contact Lens power details -------------------*/
+		/*------------------- Contact Model details -------------------*/
 		stp.selectCLModel(CL_Model);
 		stp.selectCLTint(CL_Tint);
 		stp.selectCLUsage(CL_Usage);

@@ -27,9 +27,11 @@ public interface AutoContants
 	
 	String STOCKIN_MENU = "StockIn/Purchase Details";
 	String STOCK_TRANSFER_MENU = "Stock Transfer";
+	String PRM = "Product Registry Manager";
 	
 	/*-------------------- Head Office Sub - Menu ---------------------*/
 	
 	String ST_NORMAL_MODE = "Stock Transfer Normal Mode";
+	String PRM_HO = "Product Registry - HO";
 }
 

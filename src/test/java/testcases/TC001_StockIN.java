@@ -4,12 +4,14 @@ import org.testng.annotations.Test;
 import genericLibs.NewXLLib;
 import genericLibs.PropertyFileLib;
 import pom.HomePage;
+import pom.PrmHOPage;
 import pom.StockINPage;
 
 public class TC001_StockIN extends BaseTest
 {
 	HomePage hp;
 	StockINPage stp;
+	PrmHOPage prm;
 	
 	@Test(description = "Test New General Stock Entry", dataProviderClass = NewXLLib.class, dataProvider = DATA_PROVIDER_NAME)
 	public void newStockGeneral(String Category, String Product, String Model, String Color,
@@ -17,6 +19,7 @@ public class TC001_StockIN extends BaseTest
 	{
 		hp = new HomePage(driver, webActionUtils);
 		stp = new StockINPage(driver, webActionUtils);
+		prm = new PrmHOPage(driver, webActionUtils);
 		
 		/*------------------- Navigating to StockIn -------------------*/
 		
@@ -37,9 +40,18 @@ public class TC001_StockIN extends BaseTest
 		stp.enterQuantity(Qty);
 		stp.enterRate(rate);
 		stp.enterSPrice(sprice);
-		stp.clickAddBTN();
+		String barcode = stp.clickAddBTN();
+		
+		/*------------------- Inventory Validation before Save------------------- */
+
+		stp.checkInventory(barcode);
 		
 		/*------------------- S A V E -------------------*/
-		stp.save();
+		String savedBarcode = stp.save();
+		
+		/*------------------- Inventory Validation before Save------------------- */
+
+		stp.Inventory(savedBarcode);
+		
 	}
 }

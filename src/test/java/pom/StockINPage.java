@@ -1,6 +1,7 @@
 package pom;
 
 import java.util.List;
+import java.util.Set;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,8 +14,10 @@ public class StockINPage extends BasePage
 {
 	/*------------------------- Page Verification -------------------------*/
 	
-	final static String pageTitle = " 	OptimNet 4.4";
+	final static String pageTitle = "OptimNet 4.4";
 	final static String pageUrl = PropertyFileLib.readPropertyValue(AutoContants.CON_PROP_PATH,"testurlHO");
+	HomePage hp;
+	PrmHOPage prm;
 	
 	public StockINPage(WebDriver driver, WebActionUtils webActionUtils) 
 	{
@@ -44,6 +47,12 @@ public class StockINPage extends BasePage
 	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_btnModelOK']")
 	private WebElement okBTN;
 	
+	@FindBy(xpath = "//table[@id='ctl00_ContentPlaceHolder1_gvwStocksDetails']//td[12]")
+	private WebElement newBarcode;
+	
+	@FindBy(xpath = "//*[@id='ctl00_ContentPlaceHolder1_gvwStocksDetails']/tbody/tr/td[12]")
+	private WebElement savedBarcode;
+	
 	public void clickNewBTN()
 	{
 		try
@@ -57,7 +66,7 @@ public class StockINPage extends BasePage
 		}
 	}
 	
-	public void save()
+	public String save()
 	{
 		try
 		{
@@ -68,40 +77,59 @@ public class StockINPage extends BasePage
 			String msg = webActionUtils.getAlert(driver);
 			webActionUtils.acceptAlert(driver);
 			Reporter.log("Click on " + msg + " popup", true);
+			String barcode = webActionUtils.getText(savedBarcode);
+			Reporter.log("Barcode generated successfully", true);
+			return barcode;
 		}
 		catch (Exception e) 
 		{
 			Reporter.log("Failed to click save button", true);
 			Reporter.log("No popup appeared", true);
+			Reporter.log("Failed to generated Barcode", true);
+			return null;
 		}
 	}
 	
-	public void clickAddBTN()
+	public String clickAddBTN()
 	{
 		try
 		{
 			webActionUtils.elementClick(addBTN);
 			webActionUtils.elementClick(addBTN);
 			Reporter.log("Add Button clicked successfully", true);
+			String barcode = webActionUtils.getText(newBarcode);
+			Reporter.log("Barcode generated successfully", true);
+			return barcode;
+			
 		}
 		catch (Exception e) 
 		{
 			Reporter.log("Failed to click Add Button", true);
+			Reporter.log("Failed to generated Barcode", true);
+			return null;
 		}
 	}
 	
-	public void clickAdd()
+	public String clickAdd()
 	{
 		try
 		{
 			webActionUtils.elementClick(addBTN);
 			Reporter.log("Add Button clicked successfully", true);
+			String barcode = webActionUtils.getText(newBarcode);
+			Reporter.log("Barcode generated successfully", true);
+			return barcode;
+			
 		}
 		catch (Exception e) 
 		{
 			Reporter.log("Failed to click Add Button", true);
+			Reporter.log("Failed to generated Barcode", true);
+			return null;
+			
 		}
 	}
+	
 	
 	/*-------------------------- G R I D --------------------------*/
 	
@@ -367,26 +395,36 @@ public class StockINPage extends BasePage
 	/*-------------------------- L E N S --------------------------*/
 	
 	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstLType']/option")
-	private WebElement lensType;
+	private List<WebElement> lensTypes;
 	
 	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstIndex']/option")
-	private WebElement lensIndex;
+	private List<WebElement> lensIndexs;
 	
 	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstLMat']/option")
-	private WebElement lensMaterial;
+	private List<WebElement> lensMaterials;
 	
 	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstTint']/option")
-	private WebElement lensColor;
+	private List<WebElement> lensColors;
 	
 	@FindBy(xpath = "//select[@id='ctl00_ContentPlaceHolder1_lstCoat']/option")
-	private WebElement lensCoat;
+	private List<WebElement> lensCoats;
+	
+	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_btnLensAttriOK']")
+	private WebElement lensDetailsOK;
 	
 	public void lensType(String lt)
 	{
 		try
 		{
-			webActionUtils.selectByText(lensType, lt);
-			Reporter.log("Lens Type Selected successfully", true);
+			for(WebElement lensType : lensTypes)
+			{
+				if(lensType.getText().equals(lt))
+				{
+					webActionUtils.elementClick(lensType);
+					Reporter.log("Lens Type Selected successfully", true);
+					break;
+				}
+			}
 		}
 		catch (Exception e) 
 		{
@@ -398,13 +436,195 @@ public class StockINPage extends BasePage
 	{
 		try
 		{
-			webActionUtils.selectByText(lensIndex, li);
-			Reporter.log("Lens Index Selected successfully", true);
+			for(WebElement lensindex : lensIndexs)
+			{
+				if(lensindex.getText().equals(li))
+				{
+					webActionUtils.elementClick(lensindex);
+					Reporter.log("Lens Index Selected successfully", true);
+					break;
+				}
+			}
 		}
 		catch (Exception e) 
 		{
 			Reporter.log("Failed to Select Lens Index", true);
 		}
 	}
+	
+	public void lensMaterial(String mt)
+	{
+		try
+		{
+			for(WebElement lensMaterial : lensMaterials)
+			{
+				if(lensMaterial.getText().equals(mt))
+				{
+					webActionUtils.elementClick(lensMaterial);
+					Reporter.log("Lens Material Selected successfully", true);
+					break;
+				}
+			}
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("Failed to Select Lens Material", true);
+		}
+	}
+	
+	public void lensColor(String clr)
+	{
+		try
+		{
+			for(WebElement lensColor : lensColors)
+			{
+				if(lensColor.getText().equals(clr))
+				{
+					webActionUtils.elementClick(lensColor);
+					Reporter.log("Lens Color Selected successfully", true);
+					break;
+				}
+			}
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("Failed to Select Lens Color", true);
+		}
+	}
+	public void lensCoat(String co)
+	{
+		try
+		{
+			for(WebElement lensCoat : lensCoats)
+			{
+				if(lensCoat.getText().equals(co))
+				{
+					webActionUtils.elementClick(lensCoat);
+					Reporter.log("Lens Coat Selected successfully", true);
+					break;
+				}
+			}
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("Failed to Select Lens Coat", true);
+		}
+	}
+	
+	public void clickLensDetailsOK()
+	{
+		try
+		{
+			webActionUtils.elementClick(lensDetailsOK);
+			Reporter.log("Successfully click ok on Lens Details", true);
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("Failed to Select Lens Coat", true);
+		}
+	}
+	
+	/*----------------------- Lens Power -----------------------*/
+	
+	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_txtDVRSPH']")
+	private WebElement powerTB;
+	
+	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_btnShowPower']")
+	private WebElement LoadBTN;
+	
+	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_btn33']")
+	private WebElement lensPowerOkBTN;
+	
+	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_txtDVRSPH']")
+	private WebElement lensSPH;	
+	
+	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_txtDVRCYL']")
+	private WebElement lensCYL;	
+	
+	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_txtDVRAxis']")
+	private WebElement lensAXIS;
+	
+	@FindBy(xpath = "//input[@id='ctl00_ContentPlaceHolder1_txtADDR']")
+	private WebElement lensADD;
+	
+	public void selectPower(String SPH, String CYL, String AXIS, String ADD)
+	{
+		try
+		{
+			String parentWindow = driver.getWindowHandle();
+			webActionUtils.elementClick(powerTB);
+			String expectedTitle = "Lens Power Specification";
+			Set<String> windowids=driver.getWindowHandles();
+			for(String windowId:windowids) 
+			{
+				driver.switchTo().window(windowId);
+				String actualTitle=driver.getTitle();
+				if(actualTitle.contains(expectedTitle)) 
+				{
+					break;
+				}
+			}
+			webActionUtils.enterData(lensSPH, SPH);
+			webActionUtils.enterData(lensCYL, CYL);
+			webActionUtils.enterData(lensAXIS, AXIS);
+			webActionUtils.enterData(lensADD, ADD);
+			webActionUtils.elementClick(lensPowerOkBTN);
+			webActionUtils.elementClick(lensPowerOkBTN);
+			Reporter.log("Successfully Selected Lens Power", true);
+			driver.switchTo().window(parentWindow);
+			webActionUtils.elementClick(LoadBTN);
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("Failed to Select Lens Power", true);
+		}
+	}
+	
+	public void loadPower()
+	{
+		try
+		{
+			webActionUtils.elementClick(LoadBTN);
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("Failed to Select Lens Power", true);
+		}	
+	}
+	
+	/*------------------------- Inventory Check ------------------------------------*/
+	public void checkInventory(String barcode)
+	{
+		try
+		{
+			String parentWindow = driver.getWindowHandle();
+			hp = new HomePage(driver, webActionUtils);
+			prm = new PrmHOPage(driver, webActionUtils);
+			hp.contextSelectFromList(AutoContants.HO_STOCKS, AutoContants.PRM, AutoContants.PRM_HO);
+			prm.getBarcodeQty(barcode);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("operation failed", true);
+		}
+	}
+	
+	public void Inventory(String barcode)
+	{
+		try
+		{
+			hp = new HomePage(driver, webActionUtils);
+			prm = new PrmHOPage(driver, webActionUtils);
+			hp.selectFromList(AutoContants.HO_STOCKS, AutoContants.PRM, AutoContants.PRM_HO);
+			prm.getBarcodeQty(barcode);
+		}
+		catch (Exception e) 
+		{
+			Reporter.log("operation failed", true);
+		}
+	}
 }
+
 

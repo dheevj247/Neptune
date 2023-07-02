@@ -3,6 +3,7 @@ package genericLibs;
 import java.time.Duration;
 import java.util.Set;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -103,5 +104,28 @@ public class WebActionUtils
 	public String getAlert(WebDriver driver)
 	{
 		return driver.switchTo().alert().getText();
-	}	
+	}
+	
+	public String getText(WebElement element)
+	{
+		return element.getText();
+	}
+	
+	public void newTab(WebElement element)
+	{
+		Actions actions = new Actions(driver);
+        // Perform the right-click action & Select
+        actions.keyDown(Keys.CONTROL).click(element).keyUp(Keys.CONTROL).perform();
+
+        // Switch to the newly opened tab
+        String currentWindowHandle = driver.getWindowHandle();
+        for (String windowHandle : driver.getWindowHandles()) 
+        {
+            if (!windowHandle.equals(currentWindowHandle)) 
+            {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
+	}
 }

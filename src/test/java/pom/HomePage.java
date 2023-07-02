@@ -53,7 +53,7 @@ public class HomePage extends BasePage
 	private List<WebElement> menuList;
 	
 	@FindBy(xpath = "//ul[@id='nav1']/li/div/div/ul/li/div/div/ul/li/a")
-	private List<WebElement> childMenu;
+	private List<WebElement> subMenuList;
 
 	public void selectFromList(String navigation, String menuName)
 	{
@@ -81,32 +81,95 @@ public class HomePage extends BasePage
 		}
 	}
 	
-	public void selectFromList(List<WebElement> targetNavigations, List<WebElement> targetMenus, 
-			List<WebElement> targetSubMenus, String navigation, String menu, String subMenu)
+	public void selectFromList(String navigation, String menuName, String subMenuName)
 	{
-		for (WebElement targetNavigation : targetNavigations) 
+		try 
 		{
-			if(targetNavigation.getText().equals(navigation))
+			for (WebElement targetNavigation : navigationBar) 
 			{
-				webActionUtils.moveToElement(targetNavigation);
-				for (WebElement targetMenu : targetMenus) 
+				if(targetNavigation.getText().equals(navigation))
 				{
-					if(targetMenu.getText().contains(menu))
+					webActionUtils.moveToElement(targetNavigation);
+					for (WebElement menu : menuList) 
 					{
-						webActionUtils.moveToElement(targetMenu);
-						for (WebElement targetSubMenu : targetSubMenus) 
+						if(menu.getText().contains(menuName))
 						{
-							if(targetSubMenu.getText().contains(subMenu))
+							webActionUtils.moveToElement(menu);
+							for(WebElement subMenu : subMenuList)
 							{
-								webActionUtils.elementClick(targetSubMenu);
-								Reporter.log("successfully clicked " + subMenu, true);
-								break;
+								if(subMenu.getText().contains(subMenuName))
+								{
+									webActionUtils.elementClick(subMenu);
+									Reporter.log("successfully clicked " + subMenuName, true);
+									break;	
+								}			
 							}
-							
 						}
 					}
 				}
 			}
+		} catch (Exception e) 
+		{
+
+		}
+	}
+	
+	public void contextSelectFromList(String navigation, String menuName)
+	{
+		try 
+		{
+			for (WebElement targetNavigation : navigationBar) 
+			{
+				if(targetNavigation.getText().equals(navigation))
+				{
+					webActionUtils.moveToElement(targetNavigation);
+					for (WebElement menu : menuList) 
+					{
+						if(menu.getText().contains(menuName))
+						{
+							webActionUtils.newTab(menu);
+							Reporter.log("successfully clicked " + menuName, true);
+							break;
+						}
+					}
+				}
+			}
+		} catch (Exception e) 
+		{
+
+		}
+	}
+	
+	public void contextSelectFromList(String navigation, String menuName, String subMenuName)
+	{
+		try 
+		{
+			for (WebElement targetNavigation : navigationBar) 
+			{
+				if(targetNavigation.getText().equals(navigation))
+				{
+					webActionUtils.moveToElement(targetNavigation);
+					for (WebElement menu : menuList) 
+					{
+						if(menu.getText().contains(menuName))
+						{
+							webActionUtils.moveToElement(menu);
+							for(WebElement subMenu : subMenuList)
+							{
+								if(subMenu.getText().contains(subMenuName))
+								{
+									webActionUtils.newTab(subMenu);
+									Reporter.log("successfully clicked " + subMenuName, true);
+									break;	
+								}			
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) 
+		{
+
 		}
 	}
 }

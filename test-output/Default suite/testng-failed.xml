@@ -3,17 +3,17 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testcases.TC002_StockIN">
+      <class name="testcases.TC001_StockIN">
         <methods>
           <include name="shutDown"/>
           <include name="logoutFromApp"/>
           <include name="setup"/>
           <include name="tearDown"/>
           <include name="loginToApp"/>
-          <include name="newStockContactLens"/>
+          <include name="newStockGeneral"/>
           <include name="environment"/>
         </methods>
-      </class> <!-- testcases.TC002_StockIN -->
+      </class> <!-- testcases.TC001_StockIN -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

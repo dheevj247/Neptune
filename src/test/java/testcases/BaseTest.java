@@ -96,22 +96,29 @@ public class BaseTest implements AutoContants
 		  catch (Exception e) 
 		  {
 				  Reporter.log("Logout Failed!!", true); 
-		  } 
+		  }
+		 
 	  }
 	 
 	  /*------------------------------ close openned windows ------------------------------*/
 	  @AfterClass
 	  public void tearDown()
 	  {
-		driver.close();
-		Reporter.log("Teardown Success!!", true);
+		  	try
+		  	{
+		  		driver.quit();
+				Reporter.log("Teardown Success!!", true);
+		  	}
+		  	catch (Exception e) 
+		  	{
+				
+			}
 	  }
 	
 	  /*------------------------------ closing the connection ------------------------------*/
 	  @AfterTest
 	  public void shutDown()
 	  {
-		  	driver.quit();
 			Reporter.log("Shutdown Success!!", true);
 	  }
 }

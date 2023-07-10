@@ -11,6 +11,7 @@ public class BasePage {
 	String pageTitle;
 	String pageUrl;
 	
+	
 	public BasePage(WebDriver driver,WebActionUtils webActionUtils,String pageTitle,String pageUrl) 
 	{
 		this.driver=driver;

@@ -1,5 +1,6 @@
 package genericLibs;
 
+import java.awt.Robot;
 import java.time.Duration;
 import java.util.Set;
 import org.openqa.selenium.JavascriptExecutor;
@@ -11,12 +12,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class WebActionUtils 
-{
+	public class WebActionUtils 
+	{
 	WebDriver driver;
 	WebDriverWait wait;
 	JavascriptExecutor jse;
 	Actions actions;
+	Robot robot; 
 	
 	public WebActionUtils(WebDriver driver , Duration ETO) 
 	{
@@ -30,6 +32,16 @@ public class WebActionUtils
 	{
 		targetElement.clear();
 		targetElement.sendKeys(txt);
+	}
+	
+	public void fill(WebElement targetElement , String txt)
+	{
+		targetElement.sendKeys(txt);
+	}
+	
+	public void enterDataJS(WebElement targetElement, String value)
+	{
+		jse.executeScript("arguments[0].value = arguments[1]", targetElement, value);
 	}
 	
 	public void elementClick(WebElement targetElement)
@@ -111,9 +123,19 @@ public class WebActionUtils
 		return element.getText();
 	}
 	
+	public String getAttribute(WebElement element)
+	{
+		return element.getAttribute("value");
+	}
+	
+	public String getAttribute(WebElement element, String value)
+	{
+		return element.getAttribute(value);
+	}
+	
 	public void newTab(WebElement element)
 	{
-		Actions actions = new Actions(driver);
+		actions = new Actions(driver);
         // Perform the right-click action & Select
         actions.keyDown(Keys.CONTROL).click(element).keyUp(Keys.CONTROL).perform();
 
@@ -127,5 +149,17 @@ public class WebActionUtils
                 break;
             }
         }
+	}
+	
+	public void actionClick(WebElement element)
+	{
+		actions = new Actions(driver);
+		actions.click(element).perform();
+	}
+	
+	public void enterDataAction(WebElement element, String value)
+	{
+		actions = new Actions(driver);
+		actions.sendKeys(element, value).perform();
 	}
 }

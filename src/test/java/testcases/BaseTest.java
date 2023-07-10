@@ -9,9 +9,11 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import genericLibs.AutoContants;
 import genericLibs.PropertyFileLib;
@@ -28,8 +30,8 @@ public class BaseTest implements AutoContants
 	LoginPage lp;
 	HomePage hp;
 	
+	@BeforeSuite
 	/*------------------------------- Browser selection -------------------------------*/
-	@BeforeTest
 	public void environment()
 	{
 		if(PropertyFileLib.getValue(CON_PROP_PATH, "browser").equalsIgnoreCase("chrome"))
@@ -50,9 +52,9 @@ public class BaseTest implements AutoContants
 		}
 	}
 	
-	/*------------------- Browser Configuration & Navigating to the application -------------------*/
-	@BeforeClass
-	public void setup()
+	/*------------------- Browser Configuration -------------------*/
+	@BeforeTest
+	public void configure()
 	{
 		long implicit = Long.parseLong(ITO);
 		Duration explicit = Duration.ofSeconds(Long.parseLong(ETO)); 
@@ -62,6 +64,13 @@ public class BaseTest implements AutoContants
 		Reporter.log("Setup complete", true);
 	}
 	
+	/*------------------- BNavigating to the application -------------------*/
+	@BeforeClass
+	public void setup()
+	{
+		driver.get(PropertyFileLib.getValue(CON_PROP_PATH,"testurlHO")); 
+	}
+	
 	/*------------------------------- Login into the Application -------------------------------*/
 	  @BeforeMethod public void loginToApp() 
 	  { 
@@ -69,7 +78,6 @@ public class BaseTest implements AutoContants
 		  usertype = DEFAULT_HO_USERTYPE; 
 		  username = DEFAULT_HO_USERNAME; 
 		  password = DEFAULT_HO_PASSWORD; 
-		  driver.get(PropertyFileLib.getValue(CON_PROP_PATH,"testurlHO")); 
 		  lp = new LoginPage(driver, webActionUtils);
 		  lp.login(usertype,username, password); 
 		  Reporter.log("Login success", true); 
@@ -106,7 +114,7 @@ public class BaseTest implements AutoContants
 	  {
 		  	try
 		  	{
-		  		driver.quit();
+		  		
 				Reporter.log("Teardown Success!!", true);
 		  	}
 		  	catch (Exception e) 
@@ -119,6 +127,26 @@ public class BaseTest implements AutoContants
 	  @AfterTest
 	  public void shutDown()
 	  {
-			Reporter.log("Shutdown Success!!", true);
+		  try
+		  {
+			  Reporter.log("Shutdown Success!!", true);
+		  }
+		  catch(Exception e)
+		  {
+			  
+		  }
+	  }
+	  
+	  @AfterSuite
+	  public void endServer()
+	  {
+		  try
+		  {
+			  Reporter.log("Suite Success!", true);
+		  }
+		  catch (Exception e) 
+		  {
+			  driver.close();
+		  }
 	  }
 }

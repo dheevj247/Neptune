@@ -5,13 +5,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-public class XLLib 
+public class XLLib implements AutoContants
 {
-	public static String getXLData(String xlFilePath, String sheetName , int row,int cell)
+	public static String getXLData(String sheetName , int row,int cell)
 	{
 		try
 		{
-			FileInputStream xl = new FileInputStream(xlFilePath);
+			FileInputStream xl = new FileInputStream(XL_PATH);
 			Workbook wb = WorkbookFactory.create(xl);
 			Sheet sh = wb.getSheet(sheetName);
 			return sh.getRow(row).getCell(cell).toString();
